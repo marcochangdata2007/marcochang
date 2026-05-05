@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas | 聖誕快樂 | 圣诞快乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #0a2342, #1a3a5f);
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* 語言切換按鈕 */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            font-size: 0.9rem;
+        }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        .lang-btn.active {
+            background: #c93c3c;
+            box-shadow: 0 0 10px rgba(201, 60, 60, 0.7);
+        }
+
+        /* 標題區域 */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            width: 100%;
+            max-width: 800px;
+            border-bottom: 2px dashed #c93c3c;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 #c93c3c, 6px 6px 0 rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            color: #f1faee;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a8dadc;
+            font-style: italic;
+        }
+
+        /* 主容器 */
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin-bottom: 30px;
+        }
+
+        /* 左側聖誕樹區域 */
+        .tree-section {
+            flex: 1;
+            min-width: 350px;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* 真實聖誕樹圖片容器 */
+        #tree-container {
+            position: relative;
+            width: 350px;
+            height: 500px;
+            margin: 0 auto 30px;
+            background-image: url('https://images.unsplash.com/photo-1606830733741-9686ba71ede7?w=400&fit=crop');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 裝飾品圖片樣式 */
+        .ornament {
+            position: absolute;
+            cursor: grab;
+            transition: transform 0.2s, filter 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ornament:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+        .ornament:hover {
+            filter: brightness(1.2) drop-shadow(0 0 5px gold);
+        }
+        .ornament-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 禮物區域 */
+        #gifts-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .gift {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        .gift:hover {
+            transform: translateY(-10px) scale(1.1);
+            border-color: gold;
+        }
+        .gift-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 右側控制面板 */
+        .controls-section {
+            flex: 1;
+            min-width: 350px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(201, 60, 60, 0.4);
+            backdrop-filter: blur(5px);
+        }
+        h2 {
+            color: #ffd166;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        /* 音樂播放器 */
+        .music-player {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+        .music-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .music-title {
+            flex-grow: 1;
+            font-weight: bold;
+            color: #ffd166;
+        }
+        .music-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .music-btn {
+            background: rgba(201, 60, 60, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .music-btn:hover {
+            background: rgba(201, 60, 60, 0.9);
+            transform: scale(1.1);
+        }
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .song-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .song-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .song-item.active {
+            background: rgba(201, 60, 60, 0.3);
+            border-left: 3px solid #c93c3c;
+        }
+
+        /* 裝飾品列表 - 使用圖片預覽 */
+        .decorator-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .decorator-item {
+            background: rgba(42, 125, 74, 0.3);
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: grab;
+            border: 2px dashed transparent;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .decorator-item:hover {
+            background: rgba(42, 125, 74, 0.5);
+            border-color: #ffd166;
+            transform: translateY(-3px);
+        }
+        .decorator-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+        }
+        .decorator-name {
+            font-size: 0.85rem;
+            color: #f1faee;
+            font-weight: 500;
+        }
+
+        /* 功能按鈕 */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #c93c3c, #e76f51);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            flex: 1;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(201, 60, 60, 0.4);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(201, 60, 60, 0.6);
+        }
+        #resetBtn {
+            background: linear-gradient(to right, #1d3557, #457b9d);
+            box-shadow: 0 5px 15px rgba(29, 53, 87, 0.4);
+        }
+
+        /* 裝飾計數器 */
+        .decoration-counter {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 雪花效果 */
+        #snowflakes-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            top: -10px;
+        }
+
+        /* 節日訊息 */
+        .festive-message {
+            background: rgba(201, 60, 60, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .controls-section {
+                width: 100%;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            #tree-container {
+                width: 300px;
+                height: 450px;
+            }
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 三語切換按鈕 -->
+    <div class="language-switcher">
+        <button id="langEN" class="lang-btn active">English</button>
+        <button id="langCN" class="lang-btn">简体中文</button>
+        <button id="langTW" class="lang-btn">繁體中文</button>
+    </div>
+
+    <!-- 標題區域 -->
+    <header>
+        <h1 data-en="🎄 Merry Christmas 🎄" data-cn="🎄 圣诞快乐 🎄" data-tw="🎄 聖誕快樂 🎄">🎄 Merry Christmas 🎄</h1>
+        <p class="subtitle" data-en="Drag real ornaments to decorate your tree! Experience the festive spirit." 
+           data-cn="拖拽真实的装饰品来装饰你的圣诞树！体验节日气氛。"
+           data-tw="拖拽真實的裝飾品來裝飾你的聖誕樹！體驗節日氣氛。">
+           Drag real ornaments to decorate your tree! Experience the festive spirit.
+        </p>
+    </header>
+
+    <!-- 主內容區域 -->
+    <div class="main-container">
+        <!-- 左側：聖誕樹和禮物 -->
+        <section class="tree-section">
+            <!-- 真實聖誕樹圖片背景 -->
+            <div id="tree-container">
+                <!-- 裝飾品將動態添加到這裡 -->
+            </div>
+
+            <div id="gifts-container">
+                <!-- 禮物盒將動態添加 -->
+            </div>
+            
+            <!-- 裝飾計數器 -->
+            <div class="decoration-counter">
+                <span data-en="Decorations on tree: " data-cn="树上装饰品数量：" data-tw="樹上裝飾品數量：">Decorations on tree: </span>
+                <span id="decorationCount">0</span>
+            </div>
+            
+            <p data-en="Click on a gift to see a surprise!" 
+               data-cn="点击礼物盒看看惊喜！"
+               data-tw="點擊禮物盒看看驚喜！" 
+               style="margin-top: 15px; color: #a8dadc;">
+                Click on a gift to see a surprise!
+            </p>
+
+            <!-- 節日訊息 -->
+            <div class="festive-message">
+                <p data-en="🎅 Wishing you a magical Christmas season!" 
+                   data-cn="🎅 祝你有一个神奇的圣诞节！"
+                   data-tw="🎅 祝你有一個神奇的聖誕節！">
+                   🎅 Wishing you a magical Christmas season!
+                </p>
+            </div>
+        </section>
+
+        <!-- 右側：控制面板 -->
+        <section class="controls-section">
+            <h2 data-en="🎁 Real Ornaments Collection" 
+                data-cn="🎁 真实装饰品收藏"
+                data-tw="🎁 真實裝飾品收藏">🎁 Real Ornaments Collection</h2>
+            <p data-en="Drag real ornaments onto the tree!" 
+               data-cn="将真实装饰品拖拽到树上！"
+               data-tw="將真實裝飾品拖拽到樹上！" 
+               style="text-align: center; margin-bottom: 20px; color: #f1faee;">
+               Drag real ornaments onto the tree!
+            </p>
+
+            <!-- 音樂播放器 -->
+            <div class="music-player">
+                <div class="music-info">
+                    <div class="music-title" id="currentSong">Jingle Bells</div>
+                    <div id="musicTime">0:00 / 0:00</div>
+                </div>
+                <div class="music-controls">
+                    <button class="music-btn" id="prevBtn" title="Previous song">⏮</button>
+                    <button class="music-btn" id="playBtn" title="Play/Pause">▶</button>
+                    <button class="music-btn" id="nextBtn" title="Next song">⏭</button>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50" style="width: 100px;" title="Volume">
+                    <span id="volumeIcon">🔊</span>
+                </div>
+                
+                <div class="song-list" id="songList">
+                    <!-- 歌曲列表將動態生成 -->
+                </div>
+            </div>
+
+            <!-- 真實裝飾品列表 -->
+            <div class="decorator-list" id="decoratorList">
+                <!-- 裝飾品將動態生成 -->
+            </div>
+
+            <!-- 功能按鈕 -->
+            <div class="action-buttons">
+                <button id="lightsBtn" 
+                        data-en="✨ Toggle Christmas Lights" 
+                        data-cn="✨ 切换圣诞灯光"
+                        data-tw="✨ 切換聖誕燈光">
+                    ✨ Toggle Christmas Lights
+                </button>
+                <button id="resetBtn" 
+                        data-en="🔄 Reset All Decorations" 
+                        data-cn="🔄 重置所有装饰"
+                        data-tw="🔄 重置所有裝飾">
+                    🔄 Reset All Decorations
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- 雪花容器 -->
+    <div id="snowflakes-container"></div>
+
+    <!-- 音頻元素 -->
+    <audio id="backgroundMusic" loop>
+        <!-- 音頻將通過JavaScript動態設置 -->
+    </audio>
+
+    <script>
+        // 三語文本配置
+        const languageTexts = {
+            en: "English",
+            cn: "简体中文",
+            tw: "繁體中文"
+        };
+
+        // 真實聖誕裝飾品 - 三語名稱
+        const realOrnaments = [
+            {
+                nameEn: "Red Christmas Ball",
+                nameCn: "红色圣诞球",
+                nameTw: "紅色聖誕球",
+                imageUrl: "https://images.unsplash.com/photo-1574359411659-619d6d6c1417?w=100&fit=crop",
+                size: 45,
+                type: "ornament"
+            },
+            {
+                nameEn: "Golden Star",
+                nameCn: "金色星星",
+                nameTw: "金色星星",
+                imageUrl: "https://images.unsplash.com/photo-1572181858715-80e48b8d5d5a?w=100&fit=crop",
+                size: 50,
+                type: "ornament"
+            },
+            {
+                nameEn: "Silver Bell",
+                nameCn: "银色铃铛",
+                nameTw: "銀色鈴鐺",
+                imageUrl: "https://images.unsplash.com/photo-1572635148273-9b8a7e39e1c5?w=100&fit=crop",
+                size: 40,
+                type: "ornament"
+            },
+            {
+                nameEn: "Candy Cane",
+                nameCn: "糖果手杖",
+                nameTw: "糖果手杖",
+                imageUrl: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=100&fit=crop",
+                size: 55,
+                type: "ornament"
+            },
+            {
+                nameEn: "Snowflake",
+                nameCn: "雪花装饰",
+                nameTw: "雪花裝飾",
+                imageUrl: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=100&fit=crop",
+                size: 40,
+                type: "ornament"
+            },
+            {
+                nameEn: "Christmas Bow",
+                nameCn: "圣诞蝴蝶结",
+                nameTw: "聖誕蝴蝶結",
+                imageUrl: "https://images.unsplash.com/photo-1574614176855-71c2c5810c68?w=100&fit=crop",
+                size: 48,
+                type: "ornament"
+            },
+            {
+                nameEn: "Gingerbread Man",
+                nameCn: "姜饼人",
+                nameTw: "薑餅人",
+                imageUrl: "https://images.unsplash.com/photo-1574269909858-3b7c5765e2a5?w=100&fit=crop",
+                size: 42,
+                type: "ornament"
+            },
+            {
+                nameEn: "Christmas Stocking",
+                nameCn: "圣诞袜",
+                nameTw: "聖誕襪",
+                imageUrl: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=100&fit=crop",
+                size: 60,
+                type: "ornament"
+            }
+        ];
+
+        // 真實禮物 - 三語訊息
+        const realGifts = [
+            {
+                imageUrl: "https://images.unsplash.com/photo-1543853541-d2bdef1b2e6b?w=150&fit=crop",
+                messageEn: "A beautifully wrapped present for you! Merry Christmas!",
+                messageCn: "为你精心包装的礼物！圣诞快乐！",
+                messageTw: "為你精心包裝的禮物！聖誕快樂！"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1574269909858-3b7c5765e2a5?w=150&fit=crop",
+                messageEn: "Special holiday treats inside! Enjoy the sweetness of Christmas!",
+                messageCn: "里面有特别的节日点心！享受圣诞的甜蜜！",
+                messageTw: "裡面有特別的節日點心！享受聖誕的甜蜜！"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1543853541-d2bdef1b2e6b?w=150&fit=crop",
+                messageEn: "A surprise gift filled with love and warm wishes!",
+                messageCn: "充满爱与温暖祝福的惊喜礼物！",
+                messageTw: "充滿愛與溫暖祝福的驚喜禮物！"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1574269909858-3b7c5765e2a5?w=150&fit=crop",
+                messageEn: "The magic of Christmas is inside this box!",
+                messageCn: "圣诞的魔法就在这个盒子里！",
+                messageTw: "聖誕的魔法就在這個盒子裡！"
+            }
+        ];
+
+        // 後備圖片URL
+        const backupImages = {
+            ornaments: [
+                "https://cdn-icons-png.flaticon.com/128/2583/2583926.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583920.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583918.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583927.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583919.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583921.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583925.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583924.png"
+            ],
+            gifts: [
+                "https://cdn-icons-png.flaticon.com/128/2583/2583915.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583916.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583917.png",
+                "https://cdn-icons-png.flaticon.com/128/2583/2583914.png"
+            ]
+        };
+
+        // 三語語言管理器
+        const languageManager = {
+            currentLang: 'en',
+            
+            init: function() {
+                // 設置語言按鈕事件
+                document.getElementById('langEN').addEventListener('click', () => this.switchLanguage('en'));
+                document.getElementById('langCN').addEventListener('click', () => this.switchLanguage('cn'));
+                document.getElementById('langTW').addEventListener('click', () => this.switchLanguage('tw'));
+                
+                // 初始設置為英文
+                this.switchLanguage('en');
+            },
+            
+            switchLanguage: function(lang) {
+                this.currentLang = lang;
+                
+                // 更新按鈕狀態
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.getElementById(`lang${lang.toUpperCase()}`).classList.add('active');
+                
+                // 更新所有有data-en、data-cn、data-tw屬性的元素
+                document.querySelectorAll('[data-en], [data-cn], [data-tw]').forEach(element => {
+                    const dataKey = `data-${lang}`;
+                    if (element.hasAttribute(dataKey)) {
+                        const text = element.getAttribute(dataKey);
+                        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = text;
+                        } else if (element.tagName === 'IMG') {
+                            element.alt = text;
+                        } else {
+                            element.textContent = text;
+                        }
+                    }
+                });
+                
+                // 更新裝飾品名稱
+                updateDecoratorNames();
+                
+                // 更新禮物提示
+                updateGiftMessages();
+                
+                // 更新音樂信息
+                updateMusicInfo();
+                
+                // 更新按鈕提示
+                updateButtonTitles();
+            },
+            
+            getText: function(enText, cnText, twText) {
+                switch(this.currentLang) {
+                    case 'cn': return cnText;
+                    case 'tw': return twText;
+                    default: return enText;
+                }
+            },
+            
+            getOrnamentName: function(ornament) {
+                switch(this.currentLang) {
+                    case 'cn': return ornament.nameCn;
+                    case 'tw': return ornament.nameTw;
+                    default: return ornament.nameEn;
+                }
+            },
+            
+            getGiftMessage: function(gift) {
+                switch(this.currentLang) {
+                    case 'cn': return gift.messageCn;
+                    case 'tw': return gift.messageTw;
+                    default: return gift.messageEn;
+                }
+            }
+        };
+
+        // 音樂播放器 - 三語歌曲標題
+        const musicPlayer = {
+            currentSongIndex: 0,
+            isPlaying: false,
+            audioElement: document.getElementById('backgroundMusic'),
+            songs: [
+                {
+                    titleEn: "Jingle Bells",
+                    titleCn: "铃儿响叮当",
+                    titleTw: "鈴兒響叮噹",
+                    src: "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3"
+                },
+                {
+                    titleEn: "We Wish You a Merry Christmas",
+                    titleCn: "我们祝你圣诞快乐",
+                    titleTw: "我們祝你聖誕快樂",
+                    src: "https://assets.mixkit.co/music/preview/mixkit-we-wish-you-a-merry-christmas-315.mp3"
+                },
+                {
+                    titleEn: "Silent Night",
+                    titleCn: "平安夜",
+                    titleTw: "平安夜",
+                    src: "https://assets.mixkit.co/music/preview/mixkit-silent-night-313.mp3"
+                },
+                {
+                    titleEn: "Deck the Halls",
+                    titleCn: "装饰大厅",
+                    titleTw: "裝飾大廳",
+                    src: "https://assets.mixkit.co/music/preview/mixkit-deck-the-halls-314.mp3"
+                },
+                {
+                    titleEn: "Joy to the World",
+                    titleCn: "普世欢腾",
+                    titleTw: "普世歡騰",
+                    src: "https://assets.mixkit.co/music/preview/mixkit-joy-to-the-world-317.mp3"
+                }
+            ],
+            
+            init: function() {
+                this.audioElement.volume = 0.5;
+                
+                // 設置控件事件
+                document.getElementById('playBtn').addEventListener('click', () => this.togglePlay());
+                document.getElementById('prevBtn').addEventListener('click', () => this.prevSong());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextSong());
+                document.getElementById('volumeSlider').addEventListener('input', (e) => this.setVolume(e.target.value));
+                
+                // 音頻事件監聽
+                this.audioElement.addEventListener('timeupdate', () => this.updateTime());
+                this.audioElement.addEventListener('ended', () => this.nextSong());
+                
+                // 生成歌曲列表
+                this.renderSongList();
+                
+                // 加載第一首歌
+                this.loadSong(this.currentSongIndex);
+                
+                // 更新音樂信息
+                this.updateMusicInfo();
+            },
+            
+            renderSongList: function() {
+                const songList = document.getElementById('songList');
+                songList.innerHTML = '';
+                
+                this.songs.forEach((song, index) => {
+                    const songItem = document.createElement('div');
+                    songItem.className = 'song-item';
+                    if (index === this.currentSongIndex) {
+                        songItem.classList.add('active');
+                    }
+                    
+                    // 根據當前語言獲取歌曲標題
+                    let songTitle;
+                    switch(languageManager.currentLang) {
+                        case 'cn': songTitle = song.titleCn; break;
+                        case 'tw': songTitle = song.titleTw; break;
+                        default: songTitle = song.titleEn;
+                    }
+                    
+                    songItem.textContent = `${index + 1}. ${songTitle}`;
+                    
+                    songItem.addEventListener('click', () => {
+                        this.loadSong(index);
+                        this.play();
+                    });
+                    
+                    songList.appendChild(songItem);
+                });
+            },
+            
+            loadSong: function(index) {
+                this.currentSongIndex = index;
+                this.audioElement.src = this.songs[index].src;
+                
+                // 更新UI
+                this.updateMusicInfo();
+                this.renderSongList();
+            },
+            
+            togglePlay: function() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            },
+            
+            play: function() {
+                this.audioElement.play().then(() => {
+                    this.isPlaying = true;
+                    document.getElementById('playBtn').textContent = '⏸';
+                    document.getElementById('playBtn').setAttribute('title', 
+                        languageManager.getText('Pause', '暂停', '暫停'));
+                }).catch(e => {
+                    console.log("Audio play failed:", e);
+                    alert(languageManager.getText(
+                        "Click anywhere on page to enable audio, then try again.",
+                        "请点击页面任意处启用音频，然后重试。",
+                        "請點擊頁面任意處啟用音頻，然後重試。"
+                    ));
+                });
+            },
+            
+            pause: function() {
+                this.audioElement.pause();
+                this.isPlaying = false;
+                document.getElementById('playBtn').textContent = '▶';
+                document.getElementById('playBtn').setAttribute('title',
+                    languageManager.getText('Play', '播放', '播放'));
+            },
+            
+            prevSong: function() {
+                let newIndex = this.currentSongIndex - 1;
+                if (newIndex < 0) newIndex = this.songs.length - 1;
+                this.loadSong(newIndex);
+                if (this.isPlaying) {
+                    this.play();
+                }
+            },
+            
+            nextSong: function() {
+                let newIndex = this.currentSongIndex + 1;
+                if (newIndex >= this.songs.length) newIndex = 0;
+                this.loadSong(newIndex);
+                if (this.isPlaying) {
+                    this.play();
+                }
+            },
+            
+            setVolume: function(value) {
+                const volume = value / 100;
+                this.audioElement.volume = volume;
+                
+                // 更新音量圖標
+                const volumeIcon = document.getElementById('volumeIcon');
+                if (volume === 0) {
+                    volumeIcon.textContent = '🔇';
+                } else if (volume < 0.5) {
+                    volumeIcon.textContent = '🔉';
+                } else {
+                    volumeIcon.textContent = '🔊';
+                }
+            },
+            
+            updateTime: function() {
+                const current = this.audioElement.currentTime;
+                const duration = this.audioElement.duration || 0;
+                
+                const formatTime = (time) => {
+                    const mins = Math.floor(time / 60);
+                    const secs = Math.floor(time % 60);
+                    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                };
+                
+                document.getElementById('musicTime').textContent = 
+                    `${formatTime(current)} / ${formatTime(duration)}`;
+            },
+            
+            updateMusicInfo: function() {
+                const currentSong = this.songs[this.currentSongIndex];
+                let songTitle;
+                switch(languageManager.currentLang) {
+                    case 'cn': songTitle = currentSong.titleCn; break;
+                    case 'tw': songTitle = currentSong.titleTw; break;
+                    default: songTitle = currentSong.titleEn;
+                }
+                document.getElementById('currentSong').textContent = songTitle;
+            },
+            
+            getCurrentSongTitle: function() {
+                const currentSong = this.songs[this.currentSongIndex];
+                switch(languageManager.currentLang) {
+                    case 'cn': return currentSong.titleCn;
+                    case 'tw': return currentSong.titleTw;
+                    default: return currentSong.titleEn;
+                }
+            }
+        };
+
+        // 真實聖誕樹裝飾器 - 三語支援
+        const realTreeDecorator = {
+            treeContainer: document.getElementById('tree-container'),
+            decoratorList: document.getElementById('decoratorList'),
+            giftsContainer: document.getElementById('gifts-container'),
+            snowflakesContainer: document.getElementById('snowflakes-container'),
+            
+            ornamentsOnTree: [],
+            isTwinkleOn: false,
+            twinkleInterval: null,
+            
+            init: function() {
+                this.renderRealDecoratorList();
+                this.renderRealGifts();
+                this.setupDragAndDrop();
+                
+                document.getElementById('lightsBtn').addEventListener('click', () => this.toggleChristmasLights());
+                document.getElementById('resetBtn').addEventListener('click', () => this.resetAllDecorations());
+                
+                this.createSnowflakes();
+                this.showInitialHint();
+                
+                // 更新裝飾計數器
+                this.updateDecorationCounter();
+                
+                // 設置雙擊提示
+                this.setupDoubleClickHint();
+            },
+            
+            renderRealDecoratorList: function() {
+                this.decoratorList.innerHTML = '';
+                
+                realOrnaments.forEach((ornament, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'decorator-item';
+                    item.draggable = true;
+                    item.dataset.index = index;
+                    
+                    // 獲取當前語言的名稱
+                    const ornamentName = languageManager.getOrnamentName(ornament);
+                    
+                    // 創建圖片元素
+                    const img = document.createElement('img');
+                    img.className = 'decorator-img';
+                    img.src = ornament.imageUrl;
+                    img.alt = ornamentName;
+                    img.onerror = function() {
+                        // 如果圖片加載失敗，使用後備圖片
+                        this.src = backupImages.ornaments[index % backupImages.ornaments.length];
+                    };
+                    
+                    const nameElement = document.createElement('div');
+                    nameElement.className = 'decorator-name';
+                    nameElement.textContent = ornamentName;
+                    
+                    item.appendChild(img);
+                    item.appendChild(nameElement);
+                    item.addEventListener('dragstart', this.handleDragStart);
+                    this.decoratorList.appendChild(item);
+                });
+            },
+            
+            renderRealGifts: function() {
+                this.giftsContainer.innerHTML = '';
+                
+                realGifts.forEach((gift, index) => {
+                    const giftEl = document.createElement('div');
+                    giftEl.className = 'gift';
+                    
+                    const img = document.createElement('img');
+                    img.className = 'gift-img';
+                    img.src = gift.imageUrl;
+                    img.alt = languageManager.getText("Christmas Gift", "圣诞礼物", "聖誕禮物");
+                    img.onerror = function() {
+                        this.src = backupImages.gifts[index % backupImages.gifts.length];
+                    };
+                    
+                    giftEl.appendChild(img);
+                    
+                    const titleText = languageManager.getText("Click for a surprise!", "点击查看惊喜！", "點擊查看驚喜！");
+                    giftEl.title = titleText;
+                    
+                    giftEl.addEventListener('click', () => this.showGiftMessage(gift));
+                    this.giftsContainer.appendChild(giftEl);
+                });
+            },
+            
+            setupDragAndDrop: function() {
+                this.treeContainer.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                
+                this.treeContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const index = e.dataTransfer.getData('text/plain');
+                    if (index === '') return;
+                    
+                    const ornament = realOrnaments[index];
+                    const rect = this.treeContainer.getBoundingClientRect();
+                    
+                    // 計算在樹容器內的相對位置
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // 確保裝飾品在樹範圍內
+                    if (x < 30 || x > rect.width - 30 || y < 80 || y > rect.height - 100) {
+                        const message = languageManager.getText(
+                            "Please drop the ornament onto the tree area!",
+                            "请将装饰品放到圣诞树区域！",
+                            "請將裝飾品放到聖誕樹區域！"
+                        );
+                        this.showToastMessage(message);
+                        return;
+                    }
+                    
+                    this.addRealOrnamentToTree(x, y, ornament);
+                });
+            },
+            
+            handleDragStart: function(e) {
+                const index = e.target.closest('.decorator-item').dataset.index;
+                e.dataTransfer.setData('text/plain', index);
+                
+                // 設置拖拽圖片
+                const img = e.target.closest('.decorator-item').querySelector('img');
+                if (img) {
+                    const dragIcon = document.createElement('img');
+                    dragIcon.src = img.src;
+                    dragIcon.style.width = '40px';
+                    dragIcon.style.height = '40px';
+                    dragIcon.style.position = 'absolute';
+                    dragIcon.style.left = '-1000px';
+                    document.body.appendChild(dragIcon);
+                    e.dataTransfer.setDragImage(dragIcon, 20, 20);
+                    setTimeout(() => document.body.removeChild(dragIcon), 0);
+                }
+            },
+            
+            addRealOrnamentToTree: function(x, y, ornament) {
+                const ornamentEl = document.createElement('div');
+                ornamentEl.className = 'ornament';
+                ornamentEl.style.width = `${ornament.size}px`;
+                ornamentEl.style.height = `${ornament.size}px`;
+                ornamentEl.style.left = `${x - ornament.size/2}px`;
+                ornamentEl.style.top = `${y - ornament.size/2}px`;
+                
+                const img = document.createElement('img');
+                img.className = 'ornament-img';
+                img.src = ornament.imageUrl;
+                img.alt = languageManager.getOrnamentName(ornament);
+                img.onerror = function() {
+                    const index = realOrnaments.findIndex(o => o.imageUrl === ornament.imageUrl);
+                    if (index !== -1) {
+                        this.src = backupImages.ornaments[index % backupImages.ornaments.length];
+                    }
+                };
+                
+                ornamentEl.appendChild(img);
+                
+                // 使裝飾品可拖拽和移除
+                ornamentEl.draggable = true;
+                ornamentEl.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', 'move');
+                    e.dataTransfer.effectAllowed = 'move';
+                    
+                    // 設置拖拽圖片
+                    const dragIcon = document.createElement('img');
+                    dragIcon.src = img.src;
+                    dragIcon.style.width = '40px';
+                    dragIcon.style.height = '40px';
+                    dragIcon.style.position = 'absolute';
+                    dragIcon.style.left = '-1000px';
+                    document.body.appendChild(dragIcon);
+                    e.dataTransfer.setDragImage(dragIcon, 20, 20);
+                    setTimeout(() => document.body.removeChild(dragIcon), 0);
+                    
+                    setTimeout(() => {
+                        ornamentEl.remove();
+                        const index = this.ornamentsOnTree.indexOf(ornamentEl);
+                        if (index > -1) {
+                            this.ornamentsOnTree.splice(index, 1);
+                            this.updateDecorationCounter();
+                            
+                            // 顯示移除提示
+                            const message = languageManager.getText(
+                                "Ornament removed!",
+                                "装饰品已移除！",
+                                "裝飾品已移除！"
+                            );
+                            this.showToastMessage(message);
+                        }
+                    }, 0);
+                });
+                
+                // 雙擊旋轉裝飾品
+                let rotation = 0;
+                ornamentEl.addEventListener('dblclick', () => {
+                    rotation += 45;
+                    ornamentEl.style.transform = `scale(1.1) rotate(${rotation}deg)`;
+                    ornamentEl.style.transition = 'transform 0.3s ease';
+                    
+                    // 顯示旋轉提示
+                    const message = languageManager.getText(
+                        "Ornament rotated! Double-click to rotate again.",
+                        "装饰品已旋转！双击再次旋转。",
+                        "裝飾品已旋轉！雙擊再次旋轉。"
+                    );
+                    this.showToastMessage(message, 2000);
+                    
+                    setTimeout(() => {
+                        ornamentEl.style.transform = '';
+                    }, 300);
+                });
+                
+                this.treeContainer.appendChild(ornamentEl);
+                this.ornamentsOnTree.push(ornamentEl);
+                this.updateDecorationCounter();
+                
+                // 顯示添加成功提示
+                const message = languageManager.getText(
+                    "Ornament added successfully! Double-click to rotate.",
+                    "装饰品添加成功！双击可以旋转。",
+                    "裝飾品添加成功！雙擊可以旋轉。"
+                );
+                this.showToastMessage(message, 2000);
+            },
+            
+            toggleChristmasLights: function() {
+                this.isTwinkleOn = !this.isTwinkleOn;
+                const lightsBtn = document.getElementById('lightsBtn');
+                
+                if (this.isTwinkleOn) {
+                    lightsBtn.innerHTML = languageManager.getText("✨ Lights On!", "✨ 灯光已开启！", "✨ 燈光已開啟！");
+                    
+                    // 顯示燈光開啟提示
+                    const message = languageManager.getText(
+                        "Christmas lights activated! The tree is now sparkling!",
+                        "圣诞灯光已激活！圣诞树正在闪闪发光！",
+                        "聖誕燈光已啟動！聖誕樹正在閃閃發光！"
+                    );
+                    this.showToastMessage(message);
+                    
+                    // 添加閃爍燈光效果
+                    this.twinkleInterval = setInterval(() => {
+                        this.ornamentsOnTree.forEach(orn => {
+                            if (Math.random() > 0.6) {
+                                orn.style.filter = 'brightness(1.5) drop-shadow(0 0 8px gold)';
+                                setTimeout(() => {
+                                    orn.style.filter = '';
+                                }, 300);
+                            }
+                        });
+                        
+                        // 在樹上隨機位置添加小燈光效果
+                        if (Math.random() > 0.8) {
+                            this.createRandomLight();
+                        }
+                    }, 500);
+                } else {
+                    lightsBtn.innerHTML = languageManager.getText("✨ Toggle Christmas Lights", "✨ 切换圣诞灯光", "✨ 切換聖誕燈光");
+                    
+                    // 顯示燈光關閉提示
+                    const message = languageManager.getText(
+                        "Christmas lights turned off.",
+                        "圣诞灯光已关闭。",
+                        "聖誕燈光已關閉。"
+                    );
+                    this.showToastMessage(message);
+                    
+                    clearInterval(this.twinkleInterval);
+                    this.ornamentsOnTree.forEach(orn => {
+                        orn.style.filter = '';
+                    });
+                }
+            },
+            
+            createRandomLight: function() {
+                const light = document.createElement('div');
+                light.style.position = 'absolute';
+                light.style.width = '8px';
+                light.style.height = '8px';
+                light.style.borderRadius = '50%';
+                light.style.backgroundColor = ['#ff0000', '#00ff00', '#ffff00', '#00ffff'][Math.floor(Math.random() * 4)];
+                light.style.boxShadow = '0 0 10px currentColor';
+                light.style.left = `${Math.random() * 280 + 20}px`;
+                light.style.top = `${Math.random() * 350 + 80}px`;
+                light.style.zIndex = '5';
+                
+                this.treeContainer.appendChild(light);
+                setTimeout(() => light.remove(), 600);
+            },
+            
+            resetAllDecorations: function() {
+                if (this.ornamentsOnTree.length === 0) {
+                    const message = languageManager.getText(
+                        "The tree is already empty!",
+                        "圣诞树已经是空的了！",
+                        "聖誕樹已經是空的了！"
+                    );
+                    this.showToastMessage(message);
+                    return;
+                }
+                
+                this.ornamentsOnTree.forEach(orn => orn.remove());
+                this.ornamentsOnTree = [];
+                
+                if (this.isTwinkleOn) {
+                    clearInterval(this.twinkleInterval);
+                    const lightsBtn = document.getElementById('lightsBtn');
+                    lightsBtn.innerHTML = languageManager.getText("✨ Toggle Christmas Lights", "✨ 切换圣诞灯光", "✨ 切換聖誕燈光");
+                    this.isTwinkleOn = false;
+                }
+                
+                const message = languageManager.getText(
+                    "All decorations have been removed! Start decorating your tree again.",
+                    "所有装饰品已移除！开始重新装饰你的圣诞树吧。",
+                    "所有裝飾品已移除！開始重新裝飾你的聖誕樹吧。"
+                );
+                this.showToastMessage(message);
+                this.updateDecorationCounter();
+            },
+            
+            showGiftMessage: function(gift) {
+                const message = languageManager.getGiftMessage(gift);
+                
+                // 創建禮物彈出視窗
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '50%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.background = 'linear-gradient(135deg, #c93c3c, #ffd166)';
+                modal.style.padding = '25px';
+                modal.style.borderRadius = '15px';
+                modal.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+                modal.style.zIndex = '1000';
+                modal.style.color = 'white';
+                modal.style.textAlign = 'center';
+                modal.style.maxWidth = '350px';
+                modal.style.border = '3px solid gold';
+                modal.style.animation = 'bounceIn 0.5s ease';
+                
+                const title = languageManager.getText("🎁 Gift Found! 🎁", "🎁 找到礼物！🎁", "🎁 找到禮物！🎁");
+                
+                modal.innerHTML = `
+                    <h3 style="margin-bottom: 15px; font-size: 1.5rem;">${title}</h3>
+                    <div style="font-size: 48px; margin: 15px 0;">🎁</div>
+                    <p style="margin-bottom: 20px; font-size: 16px; line-height: 1.5;">${message}</p>
+                    <p style="margin-bottom: 20px; font-style: italic; color: rgba(255,255,255,0.9);">
+                        ${languageManager.getText("Merry Christmas and Happy Holidays!", "圣诞快乐，节日愉快！", "聖誕快樂，節日愉快！")}
+                    </p>
+                    <button style="padding: 10px 25px; background: white; color: #c93c3c; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+                        ${languageManager.getText("Close", "关闭", "關閉")}
+                    </button>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 添加彈入動畫
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes bounceIn {
+                        0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+                        50% { transform: translate(-50%, -50%) scale(1.05); }
+                        70% { transform: translate(-50%, -50%) scale(0.9); }
+                        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // 關閉按鈕事件
+                const closeBtn = modal.querySelector('button');
+                closeBtn.addEventListener('mouseover', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+                });
+                closeBtn.addEventListener('mouseout', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+                closeBtn.addEventListener('click', () => {
+                    modal.style.animation = 'bounceOut 0.3s ease forwards';
+                    
+                    // 添加彈出動畫
+                    const outStyle = document.createElement('style');
+                    outStyle.textContent = `
+                        @keyframes bounceOut {
+                            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                            100% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(outStyle);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(modal);
+                        document.head.removeChild(outStyle);
+                    }, 300);
+                });
+                
+                // 點擊外部關閉
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeBtn.click();
+                    }
+                });
+            },
+            
+            createSnowflakes: function() {
+                const snowflakeCount = Math.min(100, Math.floor(window.innerWidth / 12));
+                
+                for (let i = 0; i < snowflakeCount; i++) {
+                    const flake = document.createElement('div');
+                    flake.className = 'snowflake';
+                    
+                    const size = Math.random() * 6 + 2;
+                    const startX = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 5 + 5;
+                    const opacity = Math.random() * 0.7 + 0.3;
+                    const delay = Math.random() * 5;
+                    
+                    flake.style.width = `${size}px`;
+                    flake.style.height = `${size}px`;
+                    flake.style.left = `${startX}px`;
+                    flake.style.opacity = opacity;
+                    flake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                    
+                    this.snowflakesContainer.appendChild(flake);
+                }
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% { 
+                            transform: translateY(-10px) translateX(0) rotate(0deg); 
+                            opacity: 0.8;
+                        }
+                        50% { 
+                            transform: translateY(${window.innerHeight/2}px) translateX(${Math.random()*60 - 30}px) rotate(180deg);
+                            opacity: 0.6;
+                        }
+                        100% { 
+                            transform: translateY(${window.innerHeight}px) translateX(${Math.random()*100 - 50}px) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            },
+            
+            updateDecorationCounter: function() {
+                document.getElementById('decorationCount').textContent = this.ornamentsOnTree.length;
+            },
+            
+            showToastMessage: function(message, duration = 3000) {
+                // 移除現有的提示
+                const existingToast = document.querySelector('.toast-message');
+                if (existingToast) {
+                    document.body.removeChild(existingToast);
+                }
+                
+                // 創建新提示
+                const toast = document.createElement('div');
+                toast.className = 'toast-message';
+                toast.textContent = message;
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = 'rgba(0, 0, 0, 0.8)';
+                toast.style.color = 'white';
+                toast.style.padding = '12px 24px';
+                toast.style.borderRadius = '25px';
+                toast.style.zIndex = '1000';
+                toast.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+                toast.style.fontWeight = 'bold';
+                toast.style.backdropFilter = 'blur(5px)';
+                toast.style.border = '1px solid rgba(255, 209, 102, 0.3)';
+                toast.style.animation = 'slideUp 0.3s ease';
+                
+                // 添加動畫
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideUp {
+                        from { bottom: -50px; opacity: 0; }
+                        to { bottom: 20px; opacity: 1; }
+                    }
+                    @keyframes slideDown {
+                        from { bottom: 20px; opacity: 1; }
+                        to { bottom: -50px; opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                document.body.appendChild(toast);
+                
+                // 自動消失
+                setTimeout(() => {
+                    toast.style.animation = 'slideDown 0.3s ease forwards';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            document.body.removeChild(toast);
+                        }
+                        document.head.removeChild(style);
+                    }, 300);
+                }, duration);
+            },
+            
+            showInitialHint: function() {
+                setTimeout(() => {
+                    if (this.ornamentsOnTree.length === 0) {
+                        const message = languageManager.getText(
+                            "Welcome to the Real Christmas Tree Decorator! 🎄\n\n1. Drag REAL ornaments from the right panel onto the tree.\n2. Double-click ornaments to rotate them.\n3. Click gift boxes for special surprises!\n4. Toggle lights for a magical effect.\n5. Enjoy authentic Christmas music!\n\nStart decorating now!",
+                            "欢迎使用真实圣诞树装饰器！🎄\n\n1. 从右侧面板拖拽真实装饰品到树上。\n2. 双击装饰品可以旋转它们。\n3. 点击礼物盒获得特别惊喜！\n4. 切换灯光获得魔法效果。\n5. 欣赏真实的圣诞音乐！\n\n现在开始装饰吧！",
+                            "歡迎使用真實聖誕樹裝飾器！🎄\n\n1. 從右側面板拖拽真實裝飾品到樹上。\n2. 雙擊裝飾品可以旋轉它們。\n3. 點擊禮物盒獲得特別驚喜！\n4. 切換燈光獲得魔法效果。\n5. 欣賞真實的聖誕音樂！\n\n現在開始裝飾吧！"
+                        );
+                        alert(message);
+                    }
+                }, 800);
+            },
+            
+            setupDoubleClickHint: function() {
+                // 添加雙擊提示
+                const hint = document.createElement('div');
+                hint.innerHTML = languageManager.getText(
+                    "💡 Tip: Double-click ornaments to rotate them!",
+                    "💡 提示：双击装饰品可以旋转它们！",
+                    "💡 提示：雙擊裝飾品可以旋轉它們！"
+                );
+                hint.style.position = 'fixed';
+                hint.style.bottom = '60px';
+                hint.style.left = '50%';
+                hint.style.transform = 'translateX(-50%)';
+                hint.style.background = 'rgba(255, 209, 102, 0.9)';
+                hint.style.color = '#1a3a5f';
+                hint.style.padding = '8px 16px';
+                hint.style.borderRadius = '20px';
+                hint.style.fontSize = '0.9rem';
+                hint.style.fontWeight = 'bold';
+                hint.style.zIndex = '999';
+                hint.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+                hint.style.display = 'none';
+                hint.id = 'doubleClickHint';
+                
+                document.body.appendChild(hint);
+                
+                // 當第一個裝飾品被添加時顯示提示
+                const originalAddOrnament = this.addRealOrnamentToTree.bind(this);
+                this.addRealOrnamentToTree = function(x, y, ornament) {
+                    originalAddOrnament(x, y, ornament);
+                    
+                    // 顯示雙擊提示
+                    if (this.ornamentsOnTree.length === 1) {
+                        const hint = document.getElementById('doubleClickHint');
+                        hint.style.display = 'block';
+                        hint.style.animation = 'fadeIn 0.5s ease';
+                        
+                        // 添加淡入動畫
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            @keyframes fadeIn {
+                                from { opacity: 0; }
+                                to { opacity: 1; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        
+                        // 5秒後自動隱藏
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            hint.style.transition = 'opacity 0.5s ease';
+                            setTimeout(() => {
+                                hint.style.display = 'none';
+                                document.head.removeChild(style);
+                            }, 500);
+                        }, 5000);
+                    }
+                }.bind(this);
+            }
+        };
+
+        // 更新函數
+        function updateDecoratorNames() {
+            realTreeDecorator.renderRealDecoratorList();
+        }
+        
+        function updateGiftMessages() {
+            document.querySelectorAll('.gift').forEach((gift, index) => {
+                const titleText = languageManager.getText("Click for a surprise!", "点击查看惊喜！", "點擊查看驚喜！");
+                gift.title = titleText;
+            });
+        }
+        
+        function updateMusicInfo() {
+            musicPlayer.updateMusicInfo();
+        }
+        
+        function updateDecorationCounter() {
+            realTreeDecorator.updateDecorationCounter();
+        }
+        
+        function updateButtonTitles() {
+            const playTitle = languageManager.getText(
+                musicPlayer.isPlaying ? 'Pause' : 'Play',
+                musicPlayer.isPlaying ? '暂停' : '播放',
+                musicPlayer.isPlaying ? '暫停' : '播放'
+            );
+            document.getElementById('playBtn').setAttribute('title', playTitle);
+            
+            const prevTitle = languageManager.getText('Previous song', '上一首', '上一首');
+            document.getElementById('prevBtn').setAttribute('title', prevTitle);
+            
+            const nextTitle = languageManager.getText('Next song', '下一首', '下一首');
+            document.getElementById('nextBtn').setAttribute('title', nextTitle);
+            
+            const volumeTitle = languageManager.getText('Volume', '音量', '音量');
+            document.getElementById('volumeSlider').setAttribute('title', volumeTitle);
+        }
+
+        // 初始化所有組件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 允許音頻自動播放（需要用戶交互）
+            document.body.addEventListener('click', function initAudio() {
+                if (musicPlayer.audioElement) {
+                    musicPlayer.audioElement.load();
+                }
+                document.body.removeEventListener('click', initAudio);
+            }, { once: true });
+            
+            // 初始化所有管理器
+            languageManager.init();
+            musicPlayer.init();
+            realTreeDecorator.init();
+        });
+
+        // 添加全局CSS動畫
+        document.addEventListener('DOMContentLoaded', function() {
+            const globalStyle = document.createElement('style');
+            globalStyle.textContent = `
+                .toast-message {
+                    font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+                }
+                
+                /* 響應式字體大小 */
+                @media (max-width: 768px) {
+                    .toast-message {
+                        font-size: 0.9rem;
+                        padding: 10px 20px;
+                        max-width: 90%;
+                        text-align: center;
+                    }
+                }
+                
+                /* 裝飾品旋轉動畫 */
+                @keyframes rotate {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                
+                /* 燈光閃爍動畫 */
+                @keyframes twinkle {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                }
+            `;
+            document.head.appendChild(globalStyle);
+        });
+    </script>
+</body>
+</html>
